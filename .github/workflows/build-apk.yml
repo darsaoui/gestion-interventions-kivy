@@ -10,17 +10,21 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Installer les dépendances
+    - name: Installer les dépendances Ubuntu
       run: |
         sudo apt update
         sudo apt install -y python3-pip python3-setuptools git \
         build-essential libssl-dev libffi-dev python3-dev \
-        libsqlite3-dev openjdk-11-jdk
+        libsqlite3-dev openjdk-11-jdk unzip wget
         pip3 install cython buildozer
 
-    - name: Accepter les licences SDK automatiquement
+    - name: Installer SDK Android avec acceptation automatique des licences
       run: |
-        yes | $ANDROIDSDK/tools/bin/sdkmanager --licenses || true
+        mkdir -p ~/.buildozer/android/platform/android-sdk/cmdline-tools
+        wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
+        unzip cmdline-tools.zip -d ~/.buildozer/android/platform/android-sdk/cmdline-tools
+        yes | ~/.buildozer/android/platform/android-sdk/cmdline-tools/cmdline-tools/bin/sdkmanager --sdk_root=${HOME}/.buildozer/android/platform/android-sdk --licenses
+        ~/.buildozer/android/platform/android-sdk/cmdline-tools/cmdline-tools/bin/sdkmanager --sdk_root=${HOME}/.buildozer/android/platform/android-sdk "platforms;android-31" "build-tools;33.0.2"
 
     - name: Compilation APK
       run: |
