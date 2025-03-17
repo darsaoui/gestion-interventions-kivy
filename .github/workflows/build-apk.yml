@@ -18,6 +18,10 @@ jobs:
         libsqlite3-dev openjdk-11-jdk
         pip3 install cython buildozer
 
+    - name: Accepter les licences SDK automatiquement
+      run: |
+        yes | $ANDROIDSDK/tools/bin/sdkmanager --licenses || true
+
     - name: Compilation APK
       run: |
         buildozer -v android debug
