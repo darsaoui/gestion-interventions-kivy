@@ -10,7 +10,7 @@ android.permissions = WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
 sdk = 31
 ndk = 25b
 arch = armeabi-v7a
-build_tools_version = 34.0.0
+build_tools_version = 33.0.2
 
 [buildozer]
 log_level = 2
